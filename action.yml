@@ -115,3 +115,4 @@ runs:
         echo "${urls_map}"
 
         echo "urls-map=${urls_map}" >> $GITHUB_OUTPUT
+      working-directory: ${{ inputs.working-directory }}
