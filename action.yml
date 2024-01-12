@@ -78,10 +78,18 @@ runs:
           release_version=$(curl -s https://api.github.com/repos/livecycle/preevy/releases/latest | jq -r .tag_name)
         fi
 
-        release_file="preevy-$(os_suffix)-$(arch_suffix).tar"
+        release_file="preevy-$release_version-$(os_suffix)-$(arch_suffix).tar.gz"
         release_url="https://github.com/livecycle/preevy/releases/download/${release_version}/${release_file}"
+        set -x
 
-        wget -q "${release_url}" -O - | sudo tar -x -C /usr/local/bin
+        wget -q "${release_url}" -O - | tar -xz
+        ls -latr .
+        ls -latr preevy
+        ls -altr preevy/bin
+        cp preevy/bin/preevy /usr/local/bin/preevy
+        chmod +x /usr/local/bin/preevy
+        which preevy
+
 
     - name: Run Preevy
       shell: bash
